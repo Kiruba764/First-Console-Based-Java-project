@@ -1,0 +1,159 @@
+import java.util.*;
+import java.lang.*;
+
+public class Main {
+
+
+    static void main_menu(){
+        System.out.println();
+        System.out.println("======================= *** WELCOME TO MOBILE SALES ANALYSIS SYSTEM *** =======================");
+        System.out.println();
+        System.out.println("===================================== *** ENTER YOUR CHOICE *** ==================================");
+        System.out.println();
+        System.out.println("1].SHOWROOM DETAILS \t\t\t 2].SALES DETAILS");
+        System.out.println();
+        System.out.println("3].GET SHOWROOM \t\t\t\t 4].GET SALES ANALYSIS");
+        System.out.println();
+        System.out.println("=============================== *** ENTER 0 TO EXIT *** ===============================");
+
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Showroom[] showroom = new Showroom[5];
+        Sales[] sales = new Sales[5];
+
+
+        int showroom_count = 0;
+        int sales_count = 0;
+        int choice = 100;
+        while(choice!=0){
+
+            main_menu();
+            choice = sc.nextInt();
+
+            while(choice!=9 && choice!=0){
+                switch (choice) {
+                    case 1:
+                        showroom[showroom_count] = new Showroom();
+                        showroom[showroom_count].set_details();
+                        showroom_count++;
+                        System.out.println();
+                        System.out.println("1].ADD NEW SHOWROOM");
+                        System.out.println("2].ADD SALES DETAILS");
+                        System.out.println("3].GET SHOWROOM");
+                        System.out.println("9].GO BACK TO MAIN MENU");
+                        choice = sc.nextInt();
+                        break;
+                    case 2:
+                        sales[sales_count] = new Sales();
+                        sales[sales_count].set_details();
+                        sales_count++;
+                        System.out.println();
+                        System.out.println("4].GET SALES ANALYSIS");
+                        System.out.println("9].GO BACK TO MAIN MENU");
+                        choice = sc.nextInt();
+                        break;
+                    case 3:
+                        for (int i = 0; i < showroom_count; i++) {
+                            showroom[i].get_details();
+                            System.out.println();
+                            System.out.println();
+                        }
+                        System.out.println();
+                        System.out.println("9].GO BACK TO MAIN MENU");
+                        System.out.println("0].EXIT");
+                        choice = sc.nextInt();
+                        break;
+                    case 4:
+                        for (int i = 0; i < sales_count; i++) {
+                            showroom[i].get_details();
+                            sales[i].percent();
+                            sales[i].get_details();
+                            System.out.println();
+                            System.out.println();
+                        }
+                        System.out.println();
+                        System.out.println("9].GO BACK TO MAIN MENU");
+                        System.out.println("0].EXIT");
+                        choice = sc.nextInt();
+                        break;
+                    default:
+                        System.out.println("ENTER VALID CHOICE: ");
+                        break;
+                }
+            }
+        }
+
+    }
+}
+public class Showroom{
+    String showroom_name;
+    String showroom_address;
+    String manager_name;
+
+
+    public void get_details() {
+        System.out.println("SHOWROOM NAME: "+showroom_name);
+        System.out.println("SHOWROOM LOCATION: "+showroom_address);
+        System.out.println("MANAGER NAME: "+manager_name);
+    }
+
+    public void set_details(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("======================= *** ENTER SHOWROOM DETAILS *** =======================");
+        System.out.println();
+        System.out.print("SHOWROOM NAME: ");
+        showroom_name = sc.nextLine();
+        System.out.print(("SHOWROOM ADDRESS: "));
+        showroom_address = sc.nextLine();
+        System.out.print("MANAGER NAME: ");
+        manager_name = sc.nextLine();
+    }
+}
+public class Sales extends Showroom{
+    int stock1;
+    int m_sold1;
+    int stock2;
+    int m_sold2;
+    double p1;
+    double p2;
+
+
+    @Override
+    public void get_details() {
+        System.out.println("STOCK OF MOBILES AT THE START OF YEAR 2022: "+stock1);
+        System.out.println("MOBILES SOLD AT THE END OF YEAR 2022:  "+m_sold1);
+        System.out.println("STOCK OF MOBILES AT THE START OF YEAR 2023: "+stock2);
+        System.out.println("MOBILES SOLD AT THE END OF YEAR 2022: "+m_sold2);
+        System.out.println("THE SALES PERCENTAGE OF YEAR 2022: "+p1+" %");
+        System.out.println("THE SALES PERCENTAGE OF YEAR 2023: "+p2+"%");
+        if(p1>p2){
+            System.out.println("THE SALES HAVE BEEN DECREASED IN 2023 BY "+(p1-p2)+"%");
+        }
+        else if (p1<p2)
+            System.out.println("THE SALES HAVE BEEN INCREASED IN 2023 BY "+(p2-p1)+"%");
+        else
+            System.out.println("THE SALES OF THE SHOWROOM "+showroom_name+"IS CONSISTENT");
+
+
+    }
+    @Override
+    public void set_details(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("======================= *** ENTER SALES DETAILS *** =======================");
+        System.out.println();
+        System.out.print("ENTER STOCK OF MOBILES AT START OF YEAR 2022: ");
+        stock1 = sc.nextInt();
+        System.out.print(("NUMBER OF MOBILES SOLD AT END OF YEAR 2022: "));
+        m_sold1 = sc.nextInt();
+        System.out.print("ENTER STOCK OF MOBILES AT START OF YEAR 2023: ");
+        stock2 = sc.nextInt();
+        System.out.print(("NUMBER OF MOBILES SOLD AT END OF YEAR 2023: "));
+        m_sold2 = sc.nextInt();
+    }
+    public void percent(){
+        p1=((double) m_sold1 /stock1)*100;
+        p2=((double) m_sold2 /stock2)*100;
+    }
+}
